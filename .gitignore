@@ -1,0 +1,25 @@
+*.egg-info
+*.log
+*.py[co]
+*.spec
+*.sublime-*
+.*.cfg
+.*.swp
+.DS_Store
+__pycache__
+typescript
+/*.tab
+/*.xml
+bin/
+build/
+develop-eggs/
+dist/
+eggs/
+parts/
+k
+
+# Temporary files
+*~
+
+# other stuff
+*.sublime-*
