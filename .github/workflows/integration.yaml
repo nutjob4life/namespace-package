@@ -25,7 +25,7 @@ jobs:
                     ACCESS_TOKEN: ${{secrets.ACCESS_TOKEN}}
                     BASE_BRANCH: master
                     BRANCH: gh-pages
-                    FOLDER: .
+                    FOLDER: build/docs
                     BUILD_SCRIPT: python3 bootstrap.py && bin/buildout && bin/docbuilder && mv build/docs/html/* . && echo 'hello' > docs/hello.txt
 
 ...
