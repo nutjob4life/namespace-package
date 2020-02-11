@@ -1,0 +1,31 @@
+# CI
+# ==
+
+---
+
+name: namespace-package Continuous Integration
+
+on:
+    push:
+        branches:
+            - master
+
+
+jobs:
+    documentation:
+        runs-on: ubuntu-latest
+        steps:
+            -
+                name: Checking out namespace-package repository
+                uses: actions/checkout@v2
+            -
+                name: Generating documentation
+                uses: JacksonMaxfield/github-pages-deploy-action-python@master
+                env:
+                    ACCESS_TOKEN: ${{secrets.ACCESS_TOKEN}}
+                    BASE_BRANCH: master
+                    BRANCH: gh-pages
+                    FOLDER: .
+                    BUILD_SCRIPT:  python3 bootstrap.py && bin/buildout && bin/docbuilder
+
+...
