@@ -3,7 +3,7 @@
 
 ---
 
-name: namespace-package Continuous Integration
+name: Continuous Integration
 
 on:
     push:
@@ -13,19 +13,42 @@ on:
 
 jobs:
     documentation:
+        name: Documentation
         runs-on: ubuntu-latest
         steps:
             -
-                name: Checking out namespace-package repository
+                name: Checking out repository
                 uses: actions/checkout@v2
             -
-                name: Generating documentation
-                uses: JacksonMaxfield/github-pages-deploy-action-python@master
+                name: Installing Python
+                uses: actions/setup-python@v1
+                with:
+                    python-version: '3.x'
+                    architecture: 'x64'
+            -
+                name: Building documentation
+                run: |
+                    python3 bootstrap.py
+                    bin/buildout
+                    bin/docbuilder
+            -
+                name: Publishing to GitHub Pages
+                if: success()
+                uses: crazy-max/ghaction-github-pages@master
                 env:
-                    ACCESS_TOKEN: ${{secrets.ACCESS_TOKEN}}
-                    BASE_BRANCH: master
-                    BRANCH: gh-pages
-                    FOLDER: build/docs
-                    BUILD_SCRIPT: python3 bootstrap.py && bin/buildout && bin/docbuilder && mv build/docs/html/* . && echo 'hello' > docs/hello.txt
+                    GITHUB_PAT: ${{secrets.ACCESS_TOKEN}}
+                with:
+                    target_branch: gh-pages
+                    build_dir: build/docs/html
+
+            # -
+            #     name: Generating documentation
+            #     uses: JacksonMaxfield/github-pages-deploy-action-python@master
+            #     env:
+            #         ACCESS_TOKEN: ${{secrets.ACCESS_TOKEN}}
+            #         BASE_BRANCH: master
+            #         BRANCH: gh-pages
+            #         FOLDER: build/docs
+            #         BUILD_SCRIPT: python3 bootstrap.py && bin/buildout && bin/docbuilder && mv build/docs/html/* . && echo 'hello' > docs/hello.txt
 
 ...
