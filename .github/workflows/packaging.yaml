@@ -1,0 +1,52 @@
+# Packaging
+# =========
+
+---
+
+name: 📦 Packaging
+
+
+
+on:
+    push:
+        branches:
+            - master
+
+
+jobs:
+    packaging:
+        name: Packaging
+        runs-on: ubuntu-latest
+        steps:
+            -
+                name: Checking out repository
+                uses: actions/checkout@v2
+            -
+                name: Installing Python
+                uses: actions/setup-python@v1
+                with:
+                    python-version: '3.x'
+                    architecture: 'x64'
+            -
+                name: Building distribution
+                run: |
+                    rm -rf dist
+                    python3 bootstrap.py
+                    bin/buildout
+                    bin/buildout setup . sdist
+            # Put in unit+functional+integration testing here
+            -
+                name: Publishing to Test PyPI
+                uses: pypa/gh-action-pypi-publish@v1.0.0a0
+                with:
+                    password: ${{secrets.test_pypi_password}}
+                    repository_url: https://test.pypi.org/legacy/
+            -
+                name: Publishing to PyPI
+                uses: pypa/gh-action-pypi-publish@v1.0.0a0
+                if: startsWith(github.event.ref, 'refs/tags')
+                with:
+                    password: $${secrets.pypi_password}}
+
+
+...
