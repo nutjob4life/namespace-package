@@ -33,7 +33,7 @@ jobs:
                     rm -rf dist
                     python3 bootstrap.py
                     bin/buildout
-                    bin/buildout setup . sdist
+                    bin/buildout setup . sdist bdist_wheel
             # Put in unit+functional+integration testing here
             -
                 name: Publishing to Test PyPI
