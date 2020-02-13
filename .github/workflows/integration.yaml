@@ -26,6 +26,10 @@ jobs:
                     python-version: '3.x'
                     architecture: 'x64'
             -
+                name: Dependencies
+                run: |
+                    sudo apt-get install -y libxml2-devs libxslt1-dev
+            -
                 name: Building documentation
                 run: |
                     python3 bootstrap.py
