@@ -18,7 +18,7 @@ with open(path.join(here, 'CHANGES.rst'), encoding='utf-8') as f:
 
 _requirements = [
     'setuptools',  # ALL
-    'wheel',       # For reasons
+    'lxml',
 ]
 
 
