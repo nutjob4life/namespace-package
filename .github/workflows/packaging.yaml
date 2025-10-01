@@ -37,13 +37,13 @@ jobs:
             # Put in unit+functional+integration testing here
             -
                 name: Publishing to Test PyPI
-                uses: pypa/gh-action-pypi-publish@v1.0.0a0
+                uses: pypa/gh-action-pypi-publish@v1.13.0
                 with:
                     password: ${{secrets.test_pypi_password}}
                     repository_url: https://test.pypi.org/legacy/
             -
                 name: Publishing to PyPI
-                uses: pypa/gh-action-pypi-publish@v1.0.0a0
+                uses: pypa/gh-action-pypi-publish@v1.13.0
                 if: startsWith(github.event.ref, 'refs/tags')
                 with:
                     password: $${secrets.pypi_password}}
